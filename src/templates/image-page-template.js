@@ -1,25 +1,29 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
-import Layout from "../components/layout"
+//import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 const ImagePageTemplate = ({ data }) => {
-  //console.table(data.file.id)
+  //console.table(data)
+  //const nextSlug = $nextSlug
  // console.log(data.site.siteMetadata.title)
+ const { image, next, prev } = data
+
   return (
-    <Layout>
-      <SEO title={data.file.name} />
-       <Img fluid={data.file.childImageSharp.fluid} alt={data.file.name} /> 
-    </Layout>
+    <>
+   
+      <SEO title={image.name} />
+       <Img fluid={image.childImageSharp.fluid} alt={image.name} /> 
+    </>
   )
 }
 
 export default ImagePageTemplate
 
 export const query = graphql`
-  query($slug: String!) {
-    file(fields: { slug: { eq: $slug } }) {
+  query($slug: String!, $next: String!, $prev: String! ) {
+    image: file( slug: { eq: $slug } ) {
       id
       childImageSharp {
         fluid(maxWidth: 1000) {
@@ -27,6 +31,12 @@ export const query = graphql`
         }
       }
       name
+    }
+    next: file( slug: { eq: $next } ) {
+      slug
+    }
+    prev: file( slug: { eq: $prev } ) {
+      slug
     }
     site {
       siteMetadata {

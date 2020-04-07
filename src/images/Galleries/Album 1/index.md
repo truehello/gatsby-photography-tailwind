@@ -1,8 +1,6 @@
 ---
-title: "Album 1"
 feature-image: "./627.jpg"
 description: "This is album 1. Isn't it fantastic"
-slug: "album-1"
 date: "2018-12-12"
 ---
 # My First Album

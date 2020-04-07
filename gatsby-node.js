@@ -1,128 +1,130 @@
-const fs = require ('fs');
+//const fs = require("fs")
 const path = require("path")
-const { createFilePath } = require(`gatsby-source-filesystem`)
+//const { createFilePath } = require(`gatsby-source-filesystem`)
 
-// exports.sourceNodes = ({ actions }) => {
-//   const { createTypes } = actions
-//   const typeDefs = `
-//     type Photo implements Node {
-//       name: String!
-//       id: String!
-//       slug: String!
-//     }
-//   `
-//   createTypes(typeDefs)
-// }
+// define the File type to add a slug property
+exports.sourceNodes = ({ actions }) => {
+  actions.createTypes(`
+        type File implements Node {
+            id: ID!
+            slug: String!
+            Image: Image
 
- exports.onCreateNode = ({ node, actions }) => {
+        }
+        type Image implements Node{
+            name: String!
+            slug: String!
+        }
+        type Directory implements Node {
+            id: ID!
+            slug: String!
+        }
+    `)
+}
 
-//    // Quick-and-dirty helper to convert strings into URL-friendly slugs.
-//   const slugify = str => {
-//     const slug = str
-//       .toLowerCase()
-//       .replace(/[^a-z0-9]+/g, '-')
-//       .replace(/(^-|-$)+/g, '');
-
-//     return `/${basePath}/${slug}`.replace(/\/\/+/g, '/');
-//   };
-
-
-
-  const { createNodeField } = actions
-  if (node.internal.type === `File`) {
-    const slug = createFilePath({ node, basePath: `images/Galleries` })
-    createNodeField({
-      node,
-      name: `slug`,
-      value: slug,
-    })
+// define the resolvers for any custom fields (slug)
+exports.createResolvers = ({ createResolvers }, options) => {
+  //function to format the slug strings
+  const slugify = str => {
+    const slug = str
+      .toLowerCase()
+      //replace any character that is not a letter, number or forward slash with a dash
+      //leave slash in for folder structure
+      .replace(/[^a-z0-9/]+/g, "-")
+      //remove any dash at the begining or end of the slug
+      .replace(/(^-|-$)+/g, "")
+    //remove any occurence of double forward slash
+    return `${slug}`.replace(/\/\/+/g, "/")
   }
+
+  createResolvers({
+    File: {
+      slug: {
+        resolve: source =>
+          slugify(`${source.relativeDirectory}/${source.name}`),
+      },
+    },
+    Directory: {
+      slug: {
+        resolve: source => slugify(source.name),
+      },
+    },
+  })
 }
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
+  //query the graphql for all the folders in Galleries to create pages
+  //then query for each image in the folders to create a page for that image. 
   const result = await graphql(`
     query {
+      allDirectory(filter: { relativePath: { ne: "" } }) {
+        edges {
+          node {
+            id
+            name
+            slug
+          }
+        }
+      }
       allFile(filter: { ext: { ne: ".md" } }) {
         edges {
           node {
             id
-            relativePath
             name
-            fields {
-              slug
-            }
-          }
-        }
-      }
-      allMarkdownRemark {
-        edges {
-          node {
-            frontmatter {
-              slug
-              title
-            }
+            slug
           }
         }
       }
     }
   `)
-  
-  result.data.allFile.edges.forEach(({ node }) => {
-    createPage({
-      path: `/albums${node.fields.slug}`,
-      component: path.resolve(`./src/templates/image-page-template.js`),
-      context: {
-        slug: node.fields.slug,
-      },
-    })
-  })
 
-  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+  //create a page for each album
+  result.data.allDirectory.edges.forEach(({ node }) => {
     createPage({
-      path: `/albums/${node.frontmatter.slug}`,
+      path: `albums/${node.slug}`,
       component: path.resolve(`./src/templates/album-page-template.js`),
       context: {
-        slug: node.frontmatter.slug,
-        title: node.frontmatter.title,
+        slug: node.slug,
+        name: node.name,
       },
     })
   })
+
+  //photos = result.data.allFile.edges;
+   //console.log(result.data.allFile.edges)
+//   //create a page for each image
+  result.data.allFile.edges.forEach(({ node }, index, arr) => {  
+    const nextSlug = index === 0 ? `` : arr[index - 1].node.slug
+    const prevSlug = index === arr.length - 1 ? `` : arr[index + 1].node.slug
+    
+    createPage({
+      path: `albums/${node.slug}`,
+      component: path.resolve(`./src/templates/image-page-template.js`),
+      context: {
+        slug: node.slug,
+        next: nextSlug,
+        prev: prevSlug
+      },
+    })
+  })
+
+ 
+
+//   //create a page for each image
+//   result.data.allFile.edges.map(({ node }, index) => {
+//     //photos.map((photo, index) =>
+
+//     createPage({
+//       path: `/albums/${node.slug}`,
+//       component: path.resolve(`./src/templates/image-page-template.js`),
+//       context: {
+//         slug: node.slug,
+//         prev: node[index-1].slug,
+// 		next: node[index+1].slug,
+//       },
+//     })
+//   })
+
+
 }
-
-
-// exports.sourceNodes = ({ actions }) => {
-//   const { createTypes } = actions
-//   const typeDefs = `
-//     type Photo implements Node {
-//       name: String!
-//       id: String!
-//       slug: String!
-//     }
-//   `
-//   createTypes(typeDefs)
-// }
-
-// exports.createResolvers = ({ createResolvers }, options) => {
-//   const basePath = options.basePath || '/';
-
-//   // Quick-and-dirty helper to convert strings into URL-friendly slugs.
-//   const slugify = str => {
-//     const slug = str
-//       .toLowerCase()
-//       .replace(/[^a-z0-9]+/g, '-')
-//       .replace(/(^-|-$)+/g, '');
-
-//     return `/${basePath}/${slug}`.replace(/\/\/+/g, '/');
-//   };
-
-//   createResolvers({
-//     Photo: {
-//       slug: {
-//         resolve: source => slugify(source.name)
-//       }
-//     }
-//   });
-// };
-
-

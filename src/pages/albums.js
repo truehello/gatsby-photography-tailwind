@@ -3,36 +3,34 @@ import { StaticQuery, graphql, Link } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-//import ImageList from "../components/imagelist"
+//import albumThumbnail from "../components/albumThumbnail"
 
 const ALL_ALBUM_QUERY = graphql`
   query AlbumQuery {
-    allMarkdownRemark(sort: { order: DESC, fields: frontmatter___date }) {
-      edges {
-        node {
-          frontmatter {
-            title
-            description
-            slug
-            date(fromNow: true)
-          }
-        }
+    allDirectory(filter: {relativePath: {ne: ""}}, sort: {order: DESC, fields: birthTime}) {
+    edges {
+      node {
+        name
+        slug
       }
     }
+  }
   }
 `
 const Albums = () => (
   <StaticQuery
     query={ALL_ALBUM_QUERY}
-    render={({ allMarkdownRemark }) => (
+    render={({ allDirectory }) => (
       <Layout>
         <SEO title="Albums" />
         <h1>Albums</h1>
+       
         <ul>
-          {allMarkdownRemark.edges.map(edge => (
-            <li key={edge.node.frontmatter.slug}>
-              <Link to={`/albums/${edge.node.frontmatter.slug}`}>
-                {edge.node.frontmatter.title}
+          {allDirectory.edges.map(edge => (
+            <li key={edge.node.slug}>
+              <Link to={`/albums/${edge.node.slug}`}>
+                {edge.node.name}
+               
               </Link>
             </li>
           ))}

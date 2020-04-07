@@ -1,31 +1,31 @@
-import React, { useState } from "react"
+import React from "react"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 // import ImageList from "../components/imagelist"
-import LightBox from "../components/lightbox"
+//import LightBox from "../components/lightbox"
 
 const AlbumTemplate = ({ data }) => {
   // console.log(data.allMarkdownRemark.edges[0].node)
 
-  const [showLightbox, setShowLightbox] = useState(false)
-  const [selectedImage, setSelectedImage] = useState(null)
+//   const [showLightbox, setShowLightbox] = useState(false)
+//   const [selectedImage, setSelectedImage] = useState(null)
 
-  const handleOpen = i => e => {
-    setShowLightbox(true)
-    setSelectedImage(i)
-  }
-  const handleClose = () => {
-    setShowLightbox(false)
-    setSelectedImage(null)
-  }
-  const handlePrevRequest = (i, length) => e => {
-    setSelectedImage((i - 1 + length) % length)
-  }
-  const handleNextRequest = (i, length) => e => {
-    setSelectedImage((i + 1) % length)
-  }
+//   const handleOpen = i => e => {
+//     setShowLightbox(true)
+//     setSelectedImage(i)
+//   }
+//   const handleClose = () => {
+//     setShowLightbox(false)
+//     setSelectedImage(null)
+//   }
+//   const handlePrevRequest = (i, length) => e => {
+//     setSelectedImage((i - 1 + length) % length)
+//   }
+//   const handleNextRequest = (i, length) => e => {
+//     setSelectedImage((i + 1) % length)
+//   }
 
   const images = data.allFile.edges
 
@@ -33,30 +33,37 @@ const AlbumTemplate = ({ data }) => {
     <Layout>
       <SEO title="Album Page" />
       <Link to="/albums">Albums</Link>
-      <h1>{data.allMarkdownRemark.edges[0].node.frontmatter.title}</h1>
-
+      {/* <h1>{data.allMarkdownRemark.edges[0].node.frontmatter.title}</h1> */}
+      <h1>{data.allDirectory.edges[0].node.name}</h1>
       {/* <ImageList data={data.allFile.edges} /> */}
 
       <div
         style={{
           display: `grid`,
           gridTemplateColumns: `1fr 1fr 1fr`,
-          gridGap: `10px`,
+          gridGap: `2px`,
         }}
       >
         {images.map(({ node }, i) => (
-          // <div key={node.id}>
-          //   <Link to={node.fields.slug}>
-          //     <Img fluid={node.childImageSharp.fluid} />
-          //   </Link>
-          // </div>
+        //   <button
+        //     onClick={handleOpen(i)}
+        //     key={node.id}
+        //     style={{
+        //       padding: `0`,
+        //       border: `none`,
+        //       background: `none`,
+        //       cursor: `pointer`,
+        //     }}
+        //   >
+        //     <Img fluid={node.childImageSharp.fluid} />
+        //   </button>
+        <Link to={`albums/${node.slug}`} >
+        <Img fluid={node.childImageSharp.fluid} />
+        </Link>
 
-          <button onClick={handleOpen(i)} key={node.id}>
-            <Img fluid={node.childImageSharp.fluid} />
-          </button>
         ))}
 
-        {showLightbox && selectedImage !== null && (
+        {/* {showLightbox && selectedImage !== null && (
           <LightBox
             images={images}
             handleClose={handleClose}
@@ -64,7 +71,8 @@ const AlbumTemplate = ({ data }) => {
             handlePrevRequest={handlePrevRequest}
             selectedImage={selectedImage}
           />
-        )}
+        )} */}
+
 
       </div>
     </Layout>
@@ -74,15 +82,13 @@ const AlbumTemplate = ({ data }) => {
 export default AlbumTemplate
 
 export const query = graphql`
-  query($title: String!) {
-    allFile(filter: { relativeDirectory: { eq: $title }, ext: { ne: ".md" } }) {
+  query($name: String!) {
+    allFile(filter: { relativeDirectory: { eq: $name }, ext: { ne: ".md" } }) {
       edges {
         node {
           id
           name
-          fields {
-            slug
-          }
+          slug
           childImageSharp {
             fluid(maxWidth: 1000) {
               ...GatsbyImageSharpFluid_tracedSVG
@@ -92,15 +98,23 @@ export const query = graphql`
         }
       }
     }
-    allMarkdownRemark(filter: { frontmatter: { title: { eq: $title } } }) {
+    allDirectory(filter: { name: { eq: $name } }) {
       edges {
         node {
+          name
           id
-          frontmatter {
-            title
-          }
         }
       }
     }
+    # allMarkdownRemark(filter: { frontmatter: { title: { eq: $title } } }) {
+    #   edges {
+    #     node {
+    #       id
+    #       frontmatter {
+    #         title
+    #       }
+    #     }
+    #   }
+    # }
   }
 `
