@@ -1,20 +1,21 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 //import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 const ImagePageTemplate = ({ data }) => {
-  //console.table(data)
-  //const nextSlug = $nextSlug
- // console.log(data.site.siteMetadata.title)
- const { image, next, prev } = data
+  const { image, next, prev } = data
+  const albumSlug = image.slug.replace(/\/[^/]+$/, "")
 
   return (
     <>
-   
       <SEO title={image.name} />
-       <Img fluid={image.childImageSharp.fluid} alt={image.name} /> 
+      <Link to={`albums/${albumSlug}`}>back to {albumSlug}</Link>
+      <Link to={`albums/${prev.slug}`}>prev</Link>
+      <Link to={`albums/${next.slug}`}>next</Link>
+
+      <Img fluid={image.childImageSharp.fluid} alt={image.name} />
     </>
   )
 }
@@ -22,9 +23,10 @@ const ImagePageTemplate = ({ data }) => {
 export default ImagePageTemplate
 
 export const query = graphql`
-  query($slug: String!, $next: String!, $prev: String! ) {
-    image: file( slug: { eq: $slug } ) {
+  query($slug: String!, $next: String!, $prev: String!) {
+    image: file(slug: { eq: $slug }) {
       id
+      slug
       childImageSharp {
         fluid(maxWidth: 1000) {
           ...GatsbyImageSharpFluid_tracedSVG
@@ -32,10 +34,10 @@ export const query = graphql`
       }
       name
     }
-    next: file( slug: { eq: $next } ) {
+    next: file(slug: { eq: $next }) {
       slug
     }
-    prev: file( slug: { eq: $prev } ) {
+    prev: file(slug: { eq: $prev }) {
       slug
     }
     site {
