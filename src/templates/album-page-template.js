@@ -57,7 +57,7 @@ const AlbumTemplate = ({ data }) => {
         //   >
         //     <Img fluid={node.childImageSharp.fluid} />
         //   </button>
-        <Link to={`albums/${node.slug}`} >
+        <Link to={`/albums/${node.slug}`} >
         <Img fluid={node.childImageSharp.fluid} />
         </Link>
 

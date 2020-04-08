@@ -82,7 +82,7 @@ exports.createPages = async ({ graphql, actions }) => {
   //create a page for each album
   result.data.allDirectory.edges.forEach(({ node }) => {
     createPage({
-      path: `albums/${node.slug}`,
+      path: `/albums/${node.slug}`,
       component: path.resolve(`./src/templates/album-page-template.js`),
       context: {
         slug: node.slug,
@@ -99,7 +99,7 @@ exports.createPages = async ({ graphql, actions }) => {
     const prevSlug = index === arr.length - 1 ? `` : arr[index + 1].node.slug
     
     createPage({
-      path: `albums/${node.slug}`,
+      path: `/albums/${node.slug}`,
       component: path.resolve(`./src/templates/image-page-template.js`),
       context: {
         slug: node.slug,

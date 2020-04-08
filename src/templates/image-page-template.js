@@ -3,20 +3,44 @@ import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 //import Layout from "../components/layout"
 import SEO from "../components/seo"
+import NextButton from "../components/nextButton"
+import PrevButton from "../components/prevButton"
+
 
 const ImagePageTemplate = ({ data }) => {
   const { image, next, prev } = data
   const albumSlug = image.slug.replace(/\/[^/]+$/, "")
 
   return (
-    <>
+    <div>
       <SEO title={image.name} />
-      <Link to={`albums/${albumSlug}`}>back to {albumSlug}</Link>
-      <Link to={`albums/${prev.slug}`}>prev</Link>
-      <Link to={`albums/${next.slug}`}>next</Link>
 
-      <Img fluid={image.childImageSharp.fluid} alt={image.name} />
-    </>
+      <Link to={`/albums/${albumSlug}`} className="p-2 underline hover:no-underline">back to {albumSlug}</Link>
+
+      <div className="flex w-full h-full items-center">
+
+        {prev && (
+
+          // <Link to={`/albums/${prev.slug}`} className="">
+          //   prev
+          // </Link>
+          <PrevButton  name={prev.name} slug={prev.slug} />
+        )}
+
+        <Img
+          fluid={image.childImageSharp.fluid}
+          alt={image.name}
+          className="m-4 flex-1"
+        />
+
+        {next && (
+          // <Link to={`/albums/${next.slug}`} className="">
+          //   next
+          // </Link>
+          <NextButton name={next.name} slug={next.slug} />
+        )}
+      </div>
+    </div>
   )
 }
 
@@ -36,9 +60,11 @@ export const query = graphql`
     }
     next: file(slug: { eq: $next }) {
       slug
+      name
     }
     prev: file(slug: { eq: $prev }) {
       slug
+      name
     }
     site {
       siteMetadata {
