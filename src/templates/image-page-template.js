@@ -15,7 +15,7 @@ const ImagePageTemplate = ({ data }) => {
     <div>
       <SEO title={image.name} />
 
-      <Link to={`/albums/${albumSlug}`} className="p-2 underline hover:no-underline">back to {albumSlug}</Link>
+      <Link to={`/albums/${albumSlug}`} className="p-2 text-base text-gray-500 tracking-tight underline hover:no-underline">back to {albumSlug}</Link>
 
       <div className="flex w-full h-full items-center">
 
@@ -30,7 +30,7 @@ const ImagePageTemplate = ({ data }) => {
         <Img
           fluid={image.childImageSharp.fluid}
           alt={image.name}
-          className="m-4 flex-1"
+          className="m-4 flex-1 max-w-full h-auto"
         />
 
         {next && (

@@ -9,33 +9,32 @@ import SEO from "../components/seo"
 const AlbumTemplate = ({ data }) => {
   // console.log(data.allMarkdownRemark.edges[0].node)
 
-//   const [showLightbox, setShowLightbox] = useState(false)
-//   const [selectedImage, setSelectedImage] = useState(null)
+  //   const [showLightbox, setShowLightbox] = useState(false)
+  //   const [selectedImage, setSelectedImage] = useState(null)
 
-//   const handleOpen = i => e => {
-//     setShowLightbox(true)
-//     setSelectedImage(i)
-//   }
-//   const handleClose = () => {
-//     setShowLightbox(false)
-//     setSelectedImage(null)
-//   }
-//   const handlePrevRequest = (i, length) => e => {
-//     setSelectedImage((i - 1 + length) % length)
-//   }
-//   const handleNextRequest = (i, length) => e => {
-//     setSelectedImage((i + 1) % length)
-//   }
+  //   const handleOpen = i => e => {
+  //     setShowLightbox(true)
+  //     setSelectedImage(i)
+  //   }
+  //   const handleClose = () => {
+  //     setShowLightbox(false)
+  //     setSelectedImage(null)
+  //   }
+  //   const handlePrevRequest = (i, length) => e => {
+  //     setSelectedImage((i - 1 + length) % length)
+  //   }
+  //   const handleNextRequest = (i, length) => e => {
+  //     setSelectedImage((i + 1) % length)
+  //   }
 
   const images = data.allFile.edges
 
   return (
     <Layout>
       <SEO title="Album Page" />
-      <Link to="/albums">Albums</Link>
-      {/* <h1>{data.allMarkdownRemark.edges[0].node.frontmatter.title}</h1> */}
-      <h1>{data.allDirectory.edges[0].node.name}</h1>
-      {/* <ImageList data={data.allFile.edges} /> */}
+      <Link to="/albums" className="text-normal text-gray-500 tracking-tight underline hover:no-underline">Albums</Link>
+
+      <h1 className="text-lg tracking-tight py-4">{data.allDirectory.edges[0].node.name}</h1>
 
       <div
         style={{
@@ -45,35 +44,10 @@ const AlbumTemplate = ({ data }) => {
         }}
       >
         {images.map(({ node }, i) => (
-        //   <button
-        //     onClick={handleOpen(i)}
-        //     key={node.id}
-        //     style={{
-        //       padding: `0`,
-        //       border: `none`,
-        //       background: `none`,
-        //       cursor: `pointer`,
-        //     }}
-        //   >
-        //     <Img fluid={node.childImageSharp.fluid} />
-        //   </button>
-        <Link to={`/albums/${node.slug}`} >
-        <Img fluid={node.childImageSharp.fluid} />
-        </Link>
-
+          <Link to={`/albums/${node.slug}`}>
+            <Img fluid={node.childImageSharp.fluid} />
+          </Link>
         ))}
-
-        {/* {showLightbox && selectedImage !== null && (
-          <LightBox
-            images={images}
-            handleClose={handleClose}
-            handleNextRequest={handleNextRequest}
-            handlePrevRequest={handlePrevRequest}
-            selectedImage={selectedImage}
-          />
-        )} */}
-
-
       </div>
     </Layout>
   )
