@@ -10,7 +10,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `galleryImages`,
-        path: `${__dirname}/src/images/galleries/`,
+        path: `${__dirname}/src/images/galleries`,
         //ignore: [`**.md`], // ignore markdown files
       },
     },
