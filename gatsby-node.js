@@ -67,7 +67,7 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
-      allFile(filter: { ext: { ne: ".md" } }) {
+      allFile(filter: { ext: { ne: ".md" } }, sort: {fields: relativeDirectory}) {
         edges {
           node {
             id

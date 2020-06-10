@@ -33,14 +33,19 @@ const Albums = () => (
             <li key={edge.node.slug}>
               <Link
                 to={`/albums/${edge.node.slug}`}
-                className="text-normal text-gray-500 tracking-tight underline hover:no-underline"
+                className="text-normal text-gray-500 tracking-tight underline hover:no-underline pt-4"
               >
                 {edge.node.name}
               </Link>
             </li>
           ))}
         </ul>
-        <Link to="/">Go back to the homepage</Link>
+        <Link
+          to="/"
+          className="text-normal text-gray-500 tracking-tight underline hover:no-underline pt-4"
+        >
+          Go back to the homepage
+        </Link>
       </Layout>
     )}
   />
