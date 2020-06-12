@@ -105,7 +105,7 @@ exports.createPages = async ({ graphql, actions }) => {
     })
     //create new array for the  album
     const albumArray = allAlbumImages.filter(photo => photo.node.relativeDirectory === node.name);
-    console.log( albumArray )
+    //console.log( albumArray )
 
     albumArray.forEach(({ node }, index, arr) => {  
       const nextSlug = index === 0 ? `` : arr[index - 1].node.slug
