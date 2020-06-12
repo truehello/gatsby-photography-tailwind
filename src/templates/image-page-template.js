@@ -6,7 +6,6 @@ import SEO from "../components/seo"
 import NextButton from "../components/nextButton"
 import PrevButton from "../components/prevButton"
 
-
 const ImagePageTemplate = ({ data }) => {
   const { image, next, prev } = data
   const albumSlug = image.slug.replace(/\/[^/]+$/, "")
@@ -15,30 +14,29 @@ const ImagePageTemplate = ({ data }) => {
     <div>
       <SEO title={image.name} />
 
-      <Link to={`/albums/${albumSlug}`} className="p-2 text-base text-gray-500 tracking-tight underline hover:no-underline">back to {albumSlug}</Link>
+      <Link
+        to={`/albums/${albumSlug}`}
+        className="p-2 text-base text-gray-800 tracking-tight underline hover:no-underline absolute top-0"
+      >
+        back to {albumSlug}
+      </Link>
 
-      <div className="flex w-full h-full items-center">
-
-        {prev && (
-
-          // <Link to={`/albums/${prev.slug}`} className="">
-          //   prev
-          // </Link>
-          <PrevButton  name={prev.name} slug={prev.slug} />
-        )}
-
+      <div className="h-full top-auto p-12" >
         <Img
           fluid={image.childImageSharp.fluid}
           alt={image.name}
-          className="m-4 flex-1 max-w-full h-auto"
+          className=""
+          style={{maxHeight:`90vh`}}
         />
+        </div>
 
-        {next && (
-          // <Link to={`/albums/${next.slug}`} className="">
-          //   next
-          // </Link>
-          <NextButton name={next.name} slug={next.slug} />
+      <div className="absolute w-full flex justify-between items-center" style={{top:`50%`}}>
+
+        {prev && (
+          <PrevButton name={prev.name} slug={prev.slug} className="absolute" />
         )}
+       
+        {next && <NextButton name={next.name} slug={next.slug} />}
       </div>
     </div>
   )

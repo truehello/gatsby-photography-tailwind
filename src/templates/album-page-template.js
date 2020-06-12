@@ -36,16 +36,10 @@ const AlbumTemplate = ({ data }) => {
 
       <h1 className="text-lg tracking-tight py-4">{data.allDirectory.edges[0].node.name}</h1>
 
-      <div
-        style={{
-          display: `grid`,
-          gridTemplateColumns: `1fr 1fr 1fr`,
-          gridGap: `2px`,
-        }}
-      >
+      <div className="grid grid-cols grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {images.map(({ node }, i) => (
-          <Link to={`/albums/${node.slug}`}>
-            <Img fluid={node.childImageSharp.fluid} />
+          <Link to={`/albums/${node.slug}`} >
+            <Img fluid={node.childImageSharp.fluid}  className="" />
           </Link>
         ))}
       </div>

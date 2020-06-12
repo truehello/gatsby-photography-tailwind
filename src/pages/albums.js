@@ -30,7 +30,7 @@ const Albums = () => (
 
         <ul>
           {allDirectory.edges.map(edge => (
-            <li key={edge.node.slug}>
+            <li key={edge.node.slug} className="p-4 ">
               <Link
                 to={`/albums/${edge.node.slug}`}
                 className="text-normal text-gray-500 tracking-tight underline hover:no-underline pt-4"
@@ -42,7 +42,7 @@ const Albums = () => (
         </ul>
         <Link
           to="/"
-          className="text-normal text-gray-500 tracking-tight underline hover:no-underline pt-4"
+          className="text-normal text-gray-500 tracking-tight underline hover:no-underline pt-10"
         >
           Go back to the homepage
         </Link>
