@@ -12,10 +12,10 @@ exports.sourceNodes = ({ actions }) => {
           slug: String!
           sourceInstanceName: String!
           relativePath: String!
+          
         }
-  
-  
-        type File implements Node {
+
+        type File implements Node{
             id: ID!
             slug: String!
            
@@ -26,6 +26,8 @@ exports.sourceNodes = ({ actions }) => {
             id: ID!
             slug: String!
         }
+
+       
     `)
 }
 
@@ -62,10 +64,15 @@ exports.createResolvers = ({ createResolvers }, options) => {
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
   //query the graphql for all the folders in Galleries to create pages
-  //then query for each image in the folders to create a page for that image. 
+  //then query for each image in the folders to create a page for that image.
   const result = await graphql(`
     query {
-      allDirectory(filter: { sourceInstanceName: {eq: "galleryImages"}, relativePath: { ne: "" } }) {
+      allDirectory(
+        filter: {
+          sourceInstanceName: { eq: "galleryImages" }
+          relativePath: { ne: "" }
+        }
+      ) {
         edges {
           node {
             id
@@ -74,7 +81,13 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
-      allFile(filter: { sourceInstanceName: {eq: "galleryImages"}, ext: { ne: ".md" } }, sort: {fields: relativeDirectory}) {
+      allFile(
+        filter: {
+          sourceInstanceName: { eq: "galleryImages" }
+          ext: { ne: ".md" }
+        }
+        sort: { fields: relativeDirectory }
+      ) {
         edges {
           node {
             id
@@ -87,14 +100,12 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
 
-  let allAlbums = result.data.allDirectory.edges
+  //let allAlbums = result.data.allDirectory.edges
   //console.log(allAlbums)
   let allAlbumImages = result.data.allFile.edges
- // console.log(allAlbumImages)
+  // console.log(allAlbumImages)
   //create a page for each album
   result.data.allDirectory.edges.forEach(({ node }) => {
-    
-
     createPage({
       path: `/albums/${node.slug}`,
       component: path.resolve(`./src/templates/album-page-template.js`),
@@ -104,27 +115,24 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
     //create new array for the  album
-    const albumArray = allAlbumImages.filter(photo => photo.node.relativeDirectory === node.name);
+    const albumArray = allAlbumImages.filter(
+      photo => photo.node.relativeDirectory === node.name
+    )
     //console.log( albumArray )
 
-    albumArray.forEach(({ node }, index, arr) => {  
+    albumArray.forEach(({ node }, index, arr) => {
       const nextSlug = index === 0 ? `` : arr[index - 1].node.slug
       const prevSlug = index === arr.length - 1 ? `` : arr[index + 1].node.slug
-      
+
       createPage({
         path: `/albums/${node.slug}`,
         component: path.resolve(`./src/templates/image-page-template.js`),
         context: {
           slug: node.slug,
           next: nextSlug,
-          prev: prevSlug
+          prev: prevSlug,
         },
       })
     })
-   
   })
-
- 
-
-
 }

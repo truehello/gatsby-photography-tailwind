@@ -1,8 +1,8 @@
 ---
-title: Album 1
-featureImageURL: "./627.jpg"
-description: "This is album 1. Isn't it fantastic"
-slug: "album-1"
+title: Cool food
+featureImageURL: "./47.jpg"
+description: "Look at this cool Food"
+slug: "cool-food"
 date: "2018-12-12"
 ---
 # My First Album

@@ -1,6 +1,6 @@
 ---
 title: "Tokyo Gallery"
-feature-image: "./15.jpg"
+featureImageURL: "./15.jpg"
 description: "Aerial images of Tokyo Japan"
 slug: "tokyo-gallery"
 date: "2019-06-04"
