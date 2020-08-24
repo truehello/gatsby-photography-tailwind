@@ -21,22 +21,22 @@ const ImagePageTemplate = ({ data }) => {
         back to {albumSlug}
       </Link>
 
-      <div className="h-full top-auto p-12" >
-        <Img
-          fluid={image.childImageSharp.fluid}
-          alt={image.name}
-          className=""
-          style={{maxHeight:`90vh`}}
-        />
+      <div className="h-screen flex justify-between items-center">
+        {next ? <PrevButton name={next.name} slug={next.slug} /> : <div></div>}
+
+        <div className="w-3/5">
+          <Img
+            fluid={image.childImageSharp.fluid}
+            alt={image.name}
+            className="absolute"
+          />
         </div>
 
-      <div className="absolute w-full flex justify-between items-center" style={{top:`50%`}}>
-
-        {prev && (
-          <PrevButton name={prev.name} slug={prev.slug} className="absolute" />
+        {prev ? (
+          <NextButton name={prev.name} slug={prev.slug} className="absolute" />
+        ) : (
+          <div></div>
         )}
-       
-        {next && <NextButton name={next.name} slug={next.slug} />}
       </div>
     </div>
   )

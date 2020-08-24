@@ -86,7 +86,7 @@ exports.createPages = async ({ graphql, actions }) => {
           sourceInstanceName: { eq: "galleryImages" }
           ext: { ne: ".md" }
         }
-        sort: { fields: relativeDirectory }
+        sort: { order: ASC, fields: name }
       ) {
         edges {
           node {
@@ -118,12 +118,12 @@ exports.createPages = async ({ graphql, actions }) => {
     const albumArray = allAlbumImages.filter(
       photo => photo.node.relativeDirectory === node.name
     )
-    //console.log( albumArray )
+    console.log( albumArray )
 
     albumArray.forEach(({ node }, index, arr) => {
       const nextSlug = index === 0 ? `` : arr[index - 1].node.slug
       const prevSlug = index === arr.length - 1 ? `` : arr[index + 1].node.slug
-
+      console.log(prevSlug)
       createPage({
         path: `/albums/${node.slug}`,
         component: path.resolve(`./src/templates/image-page-template.js`),

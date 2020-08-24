@@ -29,7 +29,7 @@ const Layout = ({ children }) => {
         <main>{children}</main>
         
       </div>
-      <footer className="flex w-full items-center justify-center p-4 w-full">
+      <footer className="flex w-full items-center justify-center p-4 fixed bottom-0">
           © {new Date().getFullYear()}, Built with
           {` `}
           <a href="https://www.gatsbyjs.org">Gatsby</a>

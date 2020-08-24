@@ -45,7 +45,7 @@ const BackgroundSlider = () => {
         fluid={node.childImageSharp.fluid}
         key={node.id}
         alt={node.relativePath}
-        className="w-full"
+        className="h-screen"
       />
 
       {/* {bgImages.map(item => (
