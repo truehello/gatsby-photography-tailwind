@@ -7,9 +7,9 @@ export const Header = ({ siteTitle }) => {
   const [isExpanded, toggleExpansion] = useState(false)
 
   return (
-    <header className="fixed w-full z-10 top-0 shadow-large">
+    <header className="fixed w-full z-10 top-0">
       <div>
-        <nav className="fixed w-full z-10 top-0">
+        <nav className="fixed w-full z-10 top-0 bg-gray-100 opacity-50">
           <div className="w-full mx-auto flex flex-wrap items-center justify-between mt-0 py-3">
             <div className="pl-4">
               <h1 className="logo pt-0">

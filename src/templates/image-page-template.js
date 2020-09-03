@@ -24,7 +24,7 @@ const ImagePageTemplate = ({ data }) => {
       <div className="h-screen flex justify-between items-center">
         {next ? <PrevButton name={next.name} slug={next.slug} /> : <div></div>}
 
-        <div className="w-3/5">
+        <div className="w-full md:w-3/5">
           <Img
             fluid={image.childImageSharp.fluid}
             alt={image.name}
