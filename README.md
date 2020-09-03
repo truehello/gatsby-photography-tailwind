@@ -5,10 +5,16 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby's default starter
+  Gatsby's Photography Starter
 </h1>
 
-Kick off your project with this default boilerplate. This starter ships with the main Gatsby configuration files you might need to get up and running blazing fast with the blazing fast app generator for React.
+Easily host your own photography website using gatsby. 
+
+
+## 🚀 To Add
+  - Netlify Contact form instructions for contact page
+
+  - Placing image files in folder structure. 
 
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.org/docs/gatsby-starters/)._
 

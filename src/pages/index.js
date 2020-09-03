@@ -12,15 +12,15 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
+     <div className="flex flex-col items-center justify-center" style={{height:90+'vh'}}>
+     <section className="flex flex-col items-center justify-between">
+      <p className="text-lg md:text-xl tracking-widest uppercase text-center font-light">Moments. Stories. Photography</p>
+      <h1 className="text-3xl md:text-5xl font-semibold my-4 uppercase text-center">Gatsby <span className="font-light">Photography</span></h1>
+      <p className="text-lg md:text-xl tracking-widest uppercasetext-center font-light">Now go build something great.</p>
      
-     <section className="flex flex-col items-center justify-between p-12 rounded-lg mt-10 bg-white opacity-75 shadow-lg">
-      <h1 className="text-3xl font-semibold mb-4">Hi people</h1>
-      <p>Welcome to your new Gatsby site.</p>
-      <p>Now go build something great.</p>
-     
-      <Link className="mt-6" to="/albums/">Go to Albums</Link>
+      <Link className="mt-8 bg-gray-900 text-gray-100 py-4 px-8 rounded shadow" to="/albums/">View Photos</Link>
       </section>
-
+</div>
      <BackgroundSlider />
     </Layout>
   )

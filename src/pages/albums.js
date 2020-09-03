@@ -43,7 +43,8 @@ const Albums = () => (
     render={({ allFile }) => (
       <Layout>
         <SEO title="Albums" />
-        <h1 className="text-lg tracking-tighter text-center lg:text-left py-4">
+        <section className="mt-24">
+        <h1 className="text-lg md:text-xl tracking-widest uppercase font-light py-4">
           Albums
         </h1>
 
@@ -78,6 +79,7 @@ const Albums = () => (
         >
           Go back to the homepage
         </Link>
+        </section>
       </Layout>
     )}
   />

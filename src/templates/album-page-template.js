@@ -32,9 +32,10 @@ const AlbumTemplate = ({ data }) => {
   return (
     <Layout>
       <SEO title="Album Page" />
+      <section className="mt-24">
       <Link to="/albums" className="text-normal text-gray-500 tracking-tight underline hover:no-underline">Albums</Link>
 
-      <h1 className="text-lg tracking-tight py-4">{data.allDirectory.edges[0].node.name}</h1>
+      <h1 className="text-lg md:text-xl tracking-widest uppercase font-light py-4">{data.allDirectory.edges[0].node.name}</h1>
 
       <div className="grid grid-cols grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
      
@@ -45,6 +46,7 @@ const AlbumTemplate = ({ data }) => {
           </Link>
         ))}
       </div>
+      </section>
     </Layout>
   )
 }
