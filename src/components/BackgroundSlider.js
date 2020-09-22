@@ -29,7 +29,7 @@ const BackgroundSlider = () => {
     index === length ? setIndex(0) : setIndex(index + 1)
   const handlePrevious = () =>
     index === 0 ? setIndex(length) : setIndex(index - 1)
-  const node = bgdata.backgrounds.nodes[index]
+  const currentImage = bgdata.backgrounds.nodes[index]
 
   //console.log(JSON.stringify(index, 2, null))
   //console.log(JSON.stringify(node.id, 2, null))
@@ -40,18 +40,18 @@ const BackgroundSlider = () => {
       className="absolute top-0 left-0 w-screen h-screen overflow-y-hidden"
       style={{ zIndex: -10 }}
     >
-      {/* <figure className="flex h-auto" style={{width:`600%`}} > */}
+      
       <Img
-        fluid={node.childImageSharp.fluid}
-        key={node.id}
-        alt={node.relativePath}
+        fluid={currentImage.childImageSharp.fluid}
+        key={currentImage.id}
+        alt={currentImage.relativePath}
         className="h-screen"
       />
 
       {/* {bgImages.map(item => (
-        <Img fluid={item.childImageSharp.fluid} key={item.id} alt={item.relativePath}  className="w-full"/>
+        <Img fluid={item.childImageSharp.fluid} key={item.id} alt={item.relativePath}  className="h-screen"/>
       ))} */}
-      {/* </figure> */}
+     
       <div>
         <button onClick={() => handlePrevious()} className="relative top-50">
           Previous
