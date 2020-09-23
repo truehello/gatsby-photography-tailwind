@@ -14,7 +14,7 @@ export const Header = ({ siteTitle }) => {
             <div className="pl-4">
               <h1 className="logo pt-0">
                 <Link
-                  className="text-base no-underline hover:no-underline font-extrabold lg:text-xl"
+                  className="text-base no-underline hover:no-underline font-semibold uppercase lg:text-xl"
                   to="/"
                 >
                   {siteTitle}

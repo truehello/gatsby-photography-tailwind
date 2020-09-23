@@ -41,7 +41,7 @@ const AlbumTemplate = ({ data }) => {
      
       >
         {images.map(({ node }, i) => (
-          <Link to={`/albums/${node.slug}`} className="overflow-hidden">
+          <Link to={`/albums/${node.slug}`} key={node.id} className="overflow-hidden">
             <Img fluid={node.childImageSharp.fluid}  className="transform hover:-translate-y-1 hover:scale-125 transition-transform duration-700 ease-in-out" />
           </Link>
         ))}
