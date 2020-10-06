@@ -16,7 +16,7 @@ const ImagePageTemplate = ({ data }) => {
 
       <Link
         to={`/albums/${albumSlug}`}
-        className="p-2 text-base text-gray-800 tracking-tight underline hover:no-underline absolute top-0"
+        className="p-2 text-normal text-gray-500 tracking-tight underline hover:no-underline absolute top-0"
       >
         back to {albumSlug}
       </Link>

@@ -58,7 +58,7 @@ const Albums = () => (
               
             >
               <Img
-                className=""
+                className="transform hover:-translate-y-1 hover:scale-125 transition-transform duration-700 ease-in-out"
                
                 fluid={
                   edge.node.childMarkdownRemark.frontmatter.featureImageURL
@@ -67,12 +67,31 @@ const Albums = () => (
                 alt={edge.node.childMarkdownRemark.frontmatter.title}
               />
             </Link>
-             <h3 className="text-normal text-center tracking-tight">
+             <h3 className="mt-4 text-normal text-center tracking-tight">
              {edge.node.childMarkdownRemark.frontmatter.title}
              </h3>
             </div>
           ))}
         </div>
+
+        {/* <div className="grid grid-cols grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {allFile.edges.map(({ edge }, i) => (
+            <Link
+              key={edge.node.id}
+              to={`/albums/${edge.node.childMarkdownRemark.frontmatter.slug}`}
+              className="overflow-hidden"
+            >
+              <Img
+                fluid={edge.node.childMarkdownRemark.frontmatter.featureImageURL
+                  .childImageSharp.fluid}
+                className="transform hover:-translate-y-1 hover:scale-125 transition-transform duration-700 ease-in-out"
+              />
+            </Link>
+          ))}
+        </div> */}
+
+
+
         <Link
           to="/"
           className="text-normal text-gray-500 tracking-tight underline hover:no-underline"

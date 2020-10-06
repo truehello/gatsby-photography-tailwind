@@ -33,21 +33,31 @@ const AlbumTemplate = ({ data }) => {
     <Layout>
       <SEO title="Album Page" />
       <section className="mt-24">
-      <Link to="/albums" className="text-normal text-gray-500 tracking-tight underline hover:no-underline">Albums</Link>
+        <Link
+          to="/albums"
+          className="text-normal text-gray-500 tracking-tight underline hover:no-underline"
+        >
+          Albums
+        </Link>
 
-      <h1 className="text-lg md:text-xl tracking-widest uppercase font-light py-4">{data.allDirectory.edges[0].node.name}</h1>
+        <h1 className="text-lg md:text-xl tracking-widest uppercase font-light py-4">
+          {data.allDirectory.edges[0].node.name}
+        </h1>
 
-      <div className="grid grid-cols grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-     
-      >
-        {images.map(({ node }, i) => (
-          <Link 
-          key={node.id}
-          to={`/albums/${node.slug}`} className="overflow-hidden">
-            <Img fluid={node.childImageSharp.fluid}  className="transform hover:-translate-y-1 hover:scale-125 transition-transform duration-700 ease-in-out" />
-          </Link>
-        ))}
-      </div>
+        <div className="grid grid-cols grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {images.map(({ node }, i) => (
+            <Link
+              key={node.id}
+              to={`/albums/${node.slug}`}
+              className="overflow-hidden"
+            >
+              <Img
+                fluid={node.childImageSharp.fluid}
+                className="transform hover:-translate-y-1 hover:scale-125 transition-transform duration-700 ease-in-out"
+              />
+            </Link>
+          ))}
+        </div>
       </section>
     </Layout>
   )
@@ -57,7 +67,10 @@ export default AlbumTemplate
 
 export const query = graphql`
   query($name: String!) {
-    allFile(filter: { relativeDirectory: { eq: $name }, ext: {ne: ".md"}}, sort: {order: ASC, fields: name}) {
+    allFile(
+      filter: { relativeDirectory: { eq: $name }, ext: { ne: ".md" } }
+      sort: { order: ASC, fields: name }
+    ) {
       edges {
         node {
           id
