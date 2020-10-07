@@ -1,8 +1,27 @@
+require('dotenv').config({
+  path: `.env`,
+})
+
+const config = require('./config')
+
+const pathPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix
+
 module.exports = {
+  pathPrefix: config.pathPrefix,
   siteMetadata: {
-    title: `Gatsby Photography Starter`,
-    description: `Barebones starter for Gatsby Photography website.`,
-    author: `@truehello`,
+    siteUrl: config.siteUrl + pathPrefix,
+    pathPrefix,
+    title: config.siteTitle,
+    titleAlt: config.siteTitleAlt,
+    description: config.siteDescription,
+    logo: config.siteLogo,
+    headline: config.siteHeadline,
+    siteLanguage: config.siteLanguage,
+    ogLanguage: config.ogLanguage,
+    author: config.author,
+    twitter: config.userTwitter,
+    facebook: config.ogSiteName,
+    //siteFBAppID: config.siteFBAppID,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
